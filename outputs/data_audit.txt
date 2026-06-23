@@ -1,0 +1,53 @@
+============================================================
+BÁO CÁO KIỂM ĐỊNH CHẤT LƯỢNG DỮ LIỆU (DATA AUDIT REPORT) - VSEC
+============================================================
+
+[INFO] Tải dữ liệu thành công.
+- Tổng số dòng (câu) có trong tập dữ liệu: 9341
+
+--- 1. KIỂM TRA CẤU TRÚC (SCHEMA AUDIT) ---
+[OK] Cấu trúc các cột đầy đủ và hợp lệ theo đặc tả hệ thống.
+
+Kiểu dữ liệu thực tế của từng cột:
+text                    object
+corrected_text          object
+syllable_annotations    object
+error_count              int64
+error_positions         object
+correction_pairs        object
+has_errors                bool
+
+--- 2. KIỂM TRA GIÁ TRỊ KHUYẾT (MISSING VALUES) ---
+text                    0
+corrected_text          0
+syllable_annotations    0
+error_count             0
+error_positions         0
+correction_pairs        0
+has_errors              0
+[OK] Tuyệt vời! Không phát hiện giá trị trống (Null/NaN).
+
+--- 3. KIỂM TRA LOGIC & TÍNH TOÀN VẸN DỮ LIỆU ---
+- Tất cả các câu đều chứa lỗi (`has_errors = True`)?: True
+- Số dòng bị bất nhất cấu trúc (độ dài mảng lỗi != error_count): 9341
+  [WARNING] Phát hiện lệch pha đếm số lượng lỗi.
+
+--- 4. SỐ LIỆU THỐNG KÊ CHI TIẾT TẬP DỮ LIỆU ---
+- Tổng số lỗi chính tả (Total Errors): 11202
+- Số lượng từ viết sai độc nhất (Unique Error Types): 0
+- Tỷ lệ lỗi trung bình trên một câu: 1.20
+- Số lỗi nhiều nhất xuất hiện trong một câu: 8
+
+--- 5. TRÍCH MẪU NGẪU NHIÊN KIỂM TRA (SANITY CHECK) ---
+Câu gốc:       Cân xây dựng quy chế phối hợp giữa nhân viên y tế và nhân viên CTXH theo hướng trao thêm quyền cho nhân viên CTXH.
+Câu đã sửa:    Cần xây dựng quy chế phối hợp giữa nhân viên y tế và nhân viên CTXH theo hướng trao thêm quyền cho nhân viên CTXH.
+Số lượng lỗi:  1
+--------------------------------------------------
+Câu gốc:       Qua việc giao độc quyền phân phối, nhà sản xuất mong người bán tích cực hơn, dễ kiểm soát chính sách của người trung gian về định giá bán, tín dụng , quảng cáo và cá dịch vụ khác.
+Câu đã sửa:    Qua việc giao độc quyền phân phối, nhà sản xuất mong người bán tích cực hơn, dễ kiểm soát chính sách của người trung gian về định giá bán, tín dụng , quảng cáo và các dịch vụ khác.
+Số lượng lỗi:  1
+--------------------------------------------------
+
+============================================================
+HOÀN THÀNH QUÁ TRÌNH KIỂM ĐỊNH
+============================================================
