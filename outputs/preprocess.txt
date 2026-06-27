@@ -1,0 +1,15 @@
+============================================================
+[BƯỚC 1] TIỀN XỬ LÝ & TRÍCH XUẤT ĐẶC TRƯNG NÂNG CAO (ĐÃ KHẮC PHỤC LỖI PARSE)
+============================================================
+[INFO] Đã tải thành công 9341 câu từ file Parquet.
+[PROCESS] Thao tác 1: Chuẩn hóa Unicode dựng sẵn (NFC)...
+[PROCESS] Thao tác 2: Phân loại nhãn lỗi (Thiếu dấu, sai dấu, gõ nhầm...)...
+[SUCCESS] Đã tạo thành công file cấu trúc: data\processed\noisy_clean_dataset.csv
+
+--- THỐNG KÊ SỐ LƯỢNG CÁC LOẠI LỖI ĐÃ BÓC TÁCH THÀNH CÔNG ---
+sai_dau                   5527
+go_nham_hoac_vung_mien    3454
+thieu_dau                 1130
+teencode_viết_tắt            2
+Name: count, dtype: int64
+============================================================
