@@ -1,0 +1,17 @@
+{
+    "project_name": "csc4005-csc4007-khmt16-01-vsec",
+    "run_name": "run_02_ngram_language_model",
+    "data": {
+        "train_path": "data/split/train.csv",
+        "val_path": "data/split/val.csv",
+        "test_path": "data/split/test.csv"
+    },
+    "outputs": {
+        "predict_out_path": "outputs/run_02_predictions.csv"
+    },
+    "hyperparameters": {
+        "max_distance": 2,
+        "max_vocab_size": 30000,
+        "smoothing_alpha": 0.1
+    }
+}
