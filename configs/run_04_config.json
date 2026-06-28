@@ -1,0 +1,21 @@
+{
+    "project_name": "csc4005-csc4007-khmt16-01-vsec",
+    "run_name": "run_04_vit5_correction",
+    "data": {
+        "train_path": "data/split/train.csv",
+        "val_path": "data/split/val.csv",
+        "test_path": "data/split/test.csv"
+    },
+    "outputs": {
+        "predict_out_path": "outputs/run_04_predictions.csv",
+        "model_save_dir": "outputs/run_04_vit5_finetuned"
+    },
+    "hyperparameters": {
+        "model_name": "VietAI/vit5-base",
+        "max_input_length": 128,
+        "max_target_length": 128,
+        "batch_size": 8,
+        "epochs": 3,
+        "learning_rate": 5e-5
+    }
+}

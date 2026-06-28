@@ -1,0 +1,17 @@
+{
+    "project_name": "csc4005-csc4007-khmt16-01-vsec",
+    "run_name": "run_05_error_analysis_report",
+    "data": {
+        "test_path": "data/split/test.csv"
+    },
+    "runs_predictions": {
+        "Run_01_Edit_Distance": "outputs/run_01_predictions.csv",
+        "Run_02_Ngram_Model": "outputs/run_02_predictions.csv",
+        "Run_03_BiLSTM_Seq2Seq": "outputs/run_03_predictions.csv",
+        "Run_04_ViT5_SOTA": "outputs/run_04_predictions.csv"
+    },
+    "outputs": {
+        "report_csv_path": "outputs/overall_model_comparison_report.csv",
+        "breakdown_chart_path": "outputs/error_breakdown_comparison_chart.png"
+    }
+}
