@@ -31,23 +31,30 @@ def analyze_error_positions(noisy_text, clean_text):
 
 def main():
     # 1. Đường dẫn file raw parquet (Bạn thay đổi tên file thực tế của bạn tại đây)
-    parquet_path = "data/raw_dataset.parquet" 
+    parquet_path = "data/raw/train.parquet" 
     output_dir = "outputs/plots"
     os.makedirs(output_dir, exist_ok=True)
     
-    if not os.path.exists(parquet_path):
-        # Tạo dữ liệu giả lập định dạng Parquet để test nếu chưa có file thật
-        print(f"[INFO] Không tìm thấy {parquet_path}, đang tạo file giả lập để chạy thử...")
-        os.makedirs(os.path.dirname(parquet_path), exist_ok=True)
-        sample_data = pd.DataFrame({
-            "noisy_text": ["hom nai troi dep qua", "toi di hoc nhung tre", "vsec nlp DL", "sai chinh ta roi nhe"],
-            "clean_text": ["hôm nay trời đẹp quá", "tôi đi học nhưng trễ", "vsec nlp DL", "sai chính tả rồi nhé"]
-        })
-        sample_data.to_parquet(parquet_path, index=False)
+
 
     # 2. Đọc dữ liệu từ file Parquet
     print(f"[PROCESS] Đang đọc dữ liệu từ file Parquet: {parquet_path}...")
     df = pd.read_parquet(parquet_path)
+    
+    # Ánh xạ tên cột chuẩn theo dataset VSEC mới nhất
+    mapping = {}
+    if "text" in df.columns:
+        mapping["text"] = "noisy_text"
+    if "corrected_text" in df.columns:
+        mapping["corrected_text"] = "clean_text"
+    elif "summary" in df.columns: # Dự phòng nếu có file dùng chuẩn cũ
+        mapping["summary"] = "clean_text"
+        
+    if mapping:
+        df = df.rename(columns=mapping)
+        print(f"[INFO] Đã cấu hình ánh xạ các cột dữ liệu thực tế: {mapping}")
+        
+    # Tiến hành loại bỏ các dòng rỗng dựa trên tên cột mới
     df = df.dropna(subset=["noisy_text", "clean_text"])
 
     # 3. Trích xuất các đặc trưng thống kê
@@ -61,11 +68,13 @@ def main():
     df["word_count"] = df["noisy_text"].apply(lambda x: len(tokenizer.clean_and_split(x)))
     
     # Số lượng lỗi trên mỗi câu (đếm số từ khác nhau giữa câu nhiễu và câu sạch)
-    df["error_count"] = df.apply(
-        lambda row: sum(1 for n, c in zip(str(row["noisy_text"]).split(), str(row["clean_text"]).split()) if n.lower() != c.lower()) 
-                    + abs(len(str(row["noisy_text"]).split()) - len(str(row["clean_text"]).split())), 
-        axis=1
-    )
+    # Nếu dataset đã có sẵn cột error_count thì giữ nguyên, ngược lại mới tính thủ công
+    if "error_count" not in df.columns:
+        df["error_count"] = df.apply(
+            lambda row: sum(1 for n, c in zip(str(row["noisy_text"]).split(), str(row["clean_text"]).split()) if n.lower() != c.lower()) 
+                        + abs(len(str(row["noisy_text"]).split()) - len(str(row["clean_text"]).split())), 
+            axis=1
+        )
     
     # Thu thập toàn bộ vị trí lỗi tương đối
     all_error_positions = []
@@ -95,7 +104,7 @@ def main():
     axes[1, 0].set_title("3. Tần suất số lượng từ bị lỗi trên mỗi câu", fontsize=13, fontweight='bold')
     axes[1, 0].set_xlabel("Số từ bị lỗi trong một câu")
     axes[1, 0].set_ylabel("Tần suất (Số câu)")
-    axes[1, 0].set_xaxis_locator(plt.MaxNLocator(integer=True))
+    axes[1, 0].xaxis.set_major_locator(plt.MaxNLocator(integer=True))
 
     # Biểu đồ 4: Vị trí xuất hiện của lỗi trong câu
     if all_error_positions:

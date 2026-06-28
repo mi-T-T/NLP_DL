@@ -1,2 +1,3 @@
 *.parquet
 wandb/*
+outputs/run_04_vit5_finetuned/*
